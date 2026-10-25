@@ -6,6 +6,18 @@ A Spotify client styled like the League of Legends client, with an optional in-g
 - **In-game overlay**: a small HUD widget drawn over the game. It's click-through by default so it never gets in the way, and it can show up automatically when a match starts.
 - **Global hotkeys** for playback and the overlay, which work mid-game.
 
+## Screenshots
+
+The screenshots use sample data: the album art is placeholder art, not real covers.
+
+![Now Playing: album art in a gold frame, the Up Next queue, and the player bar](docs/client-now-playing.png)
+
+![In-game overlay: album art in a gold progress ring with play, skip and volume controls](docs/overlay.png)
+
+| Library | Overlay settings |
+| --- | --- |
+| ![Library: Liked Songs and playlist cards](docs/client-library.png) | ![Settings: overlay display modes, opacity and size](docs/client-settings.png) |
+
 ## Setup
 
 1. Install dependencies: `npm install`
