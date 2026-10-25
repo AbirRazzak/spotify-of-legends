@@ -2,18 +2,36 @@
   "name": "spotify-of-legends",
   "productName": "Spotify of Legends",
   "version": "1.0.0",
+  "author": "Abir Razzak",
   "description": "A League of Legends–styled Spotify client with an optional in-game overlay",
   "main": "src/main.js",
   "private": true,
   "scripts": {
     "start": "electron .",
     "test": "node --test \"test/*.test.js\"",
-    "icon": "node scripts/make-icon.js"
+    "icon": "node scripts/make-icon.js",
+    "dist": "electron-builder --win portable"
+  },
+  "build": {
+    "appId": "com.abirrazzak.spotifyoflegends",
+    "productName": "Spotify of Legends",
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "win": {
+      "icon": "assets/icon.png"
+    },
+    "portable": {
+      "artifactName": "Spotify-of-Legends-${version}-portable.exe"
+    }
   },
   "license": "MIT",
   "type": "commonjs",
   "devDependencies": {
-    "electron": "^45.0.0"
+    "electron": "^45.0.0",
+    "electron-builder": "^26.18.0"
   },
   "dependencies": {
     "koffi": "^3.3.4"

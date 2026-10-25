@@ -18,10 +18,16 @@ The screenshots use sample data: the album art is placeholder art, not real cove
 | --- | --- |
 | ![Library: Liked Songs and playlist cards](docs/client-library.png) | ![Settings: overlay display modes, opacity and size](docs/client-settings.png) |
 
+## Download
+
+Grab `Spotify-of-Legends-<version>-portable.exe` from the [latest release](https://github.com/AbirRazzak/spotify-of-legends/releases/latest) and run it. Nothing to install. Windows SmartScreen may warn that the app is unrecognized because it isn't code-signed; click **More info → Run anyway**.
+
 ## Setup
 
+To run from source instead:
+
 1. Install dependencies: `npm install`
-2. Start the app: `npm start`
+2. Start the app: `npm start` (or build the portable exe with `npm run dist`)
 3. Link Spotify. The app walks you through this the first time:
    - Go to <https://developer.spotify.com/dashboard> and create an app. Any name and description will do.
    - Add the Redirect URI `http://127.0.0.1:8888/callback` and tick **Web API**.
