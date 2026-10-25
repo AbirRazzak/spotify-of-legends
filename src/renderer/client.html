@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https: data:"
+    />
+    <title>Spotify of Legends</title>
+    <link rel="stylesheet" href="theme.css" />
+    <link rel="stylesheet" href="client.css" />
+  </head>
+  <body>
+    <div class="splash" id="splash"></div>
+
+    <header class="titlebar">
+      <div class="brand">
+        <img src="../../assets/icon.png" alt="" />
+        <span>Spotify <em>of</em> Legends</span>
+      </div>
+      <nav class="nav" id="nav">
+        <button data-view="home" class="active">Now Playing</button>
+        <button data-view="library">Library</button>
+        <button data-view="search">Search</button>
+        <button data-view="settings">Settings</button>
+      </nav>
+      <div class="titlebar-right">
+        <div class="status-chip" id="gameChip"><i></i><span>Not in game</span></div>
+        <button class="overlay-toggle" id="overlayToggle" title="Toggle the in-game overlay (Ctrl + Alt + O)">
+          Overlay <b>Off</b>
+        </button>
+        <div class="win-ctrls">
+          <button id="btnMin" data-icon="minimize" title="Minimize"></button>
+          <button id="btnClose" data-icon="close" title="Close to tray"></button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="view active" data-view="home">
+        <div class="np" id="np">
+          <div class="np-art lol-frame">
+            <img id="npArt" alt="" />
+            <div class="np-art-empty" data-icon="note"></div>
+          </div>
+          <div class="np-info">
+            <div class="eyebrow" id="npEyebrow">Now playing</div>
+            <h1 id="npTitle">Nothing playing</h1>
+            <div class="np-artist" id="npArtist"></div>
+            <div class="np-album" id="npAlbum"></div>
+            <div class="lol-divider"></div>
+            <h3 class="section-title">Up next</h3>
+            <ol class="queue" id="queue"></ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" data-view="library">
+        <div class="view-head">
+          <h2>Library</h2>
+          <button class="lol-btn small" id="refreshLibrary">Refresh</button>
+        </div>
+        <div class="lol-divider"></div>
+        <div class="grid" id="playlists"></div>
+      </section>
+
+      <section class="view" data-view="search">
+        <div class="view-head">
+          <h2>Search</h2>
+        </div>
+        <div class="search-box">
+          <span data-icon="search"></span>
+          <input class="lol-input" id="searchInput" placeholder="Search songs and playlists" spellcheck="false" />
+        </div>
+        <div id="searchResults"></div>
+      </section>
+
+      <section class="view" data-view="settings">
+        <div class="view-head"><h2>Settings</h2></div>
+        <div class="lol-divider"></div>
+        <div class="settings">
+          <div class="group">
+            <h3 class="section-title">Spotify account</h3>
+            <div class="row">
+              <div class="row-label">Status</div>
+              <div id="acctStatus" class="acct"></div>
+            </div>
+            <div class="row">
+              <label class="row-label" for="clientId">Client ID</label>
+              <input class="lol-input wide" id="clientId" spellcheck="false" placeholder="Paste your Spotify app Client ID" />
+            </div>
+            <div class="row">
+              <div class="row-label">Redirect URI</div>
+              <div class="inline">
+                <code class="redirect" id="redirectUri"></code>
+                <button class="lol-btn small" id="copyRedirect">Copy</button>
+              </div>
+            </div>
+            <div class="row">
+              <div></div>
+              <div class="inline">
+                <button class="lol-btn primary" id="btnConnect">Connect</button>
+                <button class="lol-btn" id="btnDisconnect">Disconnect</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="group">
+            <h3 class="section-title">In-game overlay</h3>
+            <label class="lol-check"><input type="checkbox" id="optOverlay" /> Enable the in-game overlay</label>
+            <label class="lol-check"><input type="checkbox" id="optInGame" /> Only show it while a League match is running</label>
+            <label class="lol-check"><input type="checkbox" id="optControls" /> Show play, skip and volume controls on the overlay</label>
+            <div class="row">
+              <div class="row-label">Display</div>
+              <div class="seg" id="optMode">
+                <button data-mode="always">Always on</button>
+                <button data-mode="auto">Only when…</button>
+              </div>
+            </div>
+            <div class="sub-opts" id="autoOpts">
+              <label class="lol-check"><input type="checkbox" id="optShowDead" /> I'm dead, waiting to respawn</label>
+              <label class="lol-check"><input type="checkbox" id="optShowTab" /> I'm holding Tab (scoreboard)</label>
+              <label class="lol-check"><input type="checkbox" id="optShowPeek" /> For a few seconds when the song changes or I use a music hotkey</label>
+            </div>
+            <p class="hint" id="modeHint"></p>
+            <div class="row">
+              <div class="row-label">Opacity</div>
+              <div class="inline">
+                <input type="range" class="lol-range" id="optOpacity" min="30" max="100" />
+                <span class="val" id="optOpacityVal"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="row-label">Size</div>
+              <div class="inline">
+                <input type="range" class="lol-range" id="optScale" min="60" max="160" step="5" />
+                <span class="val" id="optScaleVal"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div></div>
+              <div class="inline">
+                <button class="lol-btn" id="btnPosition">Position overlay</button>
+                <button class="lol-btn" id="btnResetPos">Reset position</button>
+              </div>
+            </div>
+            <p class="hint">
+              The overlay draws on top of the game, so set League's <b>Window Mode</b> to <b>Borderless</b> or
+              <b>Windowed</b> (Settings → Video). Exclusive fullscreen hides other windows.
+            </p>
+          </div>
+
+          <div class="group">
+            <h3 class="section-title">Performance</h3>
+            <label class="lol-check"><input type="checkbox" id="optHwAccel" /> Hardware acceleration</label>
+            <p class="hint">
+              Off by default, so the app draws on the CPU and doesn't compete with League for the GPU. On some graphics
+              cards, turning it on lets Windows show the overlay with less FPS cost. Try both and keep whichever runs
+              better.
+            </p>
+            <div class="inline" id="restartRow">
+              <span class="hint">Restart the app to apply this change.</span>
+              <button class="lol-btn small" id="btnRestart">Restart now</button>
+            </div>
+          </div>
+
+          <div class="group">
+            <h3 class="section-title">Hotkeys</h3>
+            <div class="hotkeys" id="hotkeys"></div>
+            <p class="hint">Hotkeys work anywhere, including mid-game.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="player" id="player">
+      <div class="p-track">
+        <div class="p-art"><img id="pArt" alt="" /></div>
+        <div class="p-text">
+          <div class="p-title" id="pTitle">—</div>
+          <div class="p-artist" id="pArtist"></div>
+        </div>
+      </div>
+      <div class="p-center">
+        <div class="p-controls">
+          <button class="icon-btn" id="btnShuffle" data-icon="shuffle" title="Shuffle"></button>
+          <button class="icon-btn" id="btnPrev" data-icon="prev" title="Previous"></button>
+          <button class="orb" id="btnPlay" data-icon="play" title="Play / pause"></button>
+          <button class="icon-btn" id="btnNext" data-icon="next" title="Next"></button>
+          <button class="icon-btn" id="btnRepeat" data-icon="repeat" title="Repeat"></button>
+        </div>
+        <div class="p-progress">
+          <span id="tCur">0:00</span>
+          <div class="bar" id="bar">
+            <div class="bar-fill" id="barFill"></div>
+            <div class="bar-gem" id="barGem"></div>
+          </div>
+          <span id="tDur">0:00</span>
+        </div>
+      </div>
+      <div class="p-right">
+        <div class="device-wrap">
+          <button class="icon-btn" id="btnDevice" data-icon="device" title="Devices"></button>
+          <span class="device-name" id="deviceName"></span>
+          <div class="dropdown" id="deviceMenu"></div>
+        </div>
+        <button class="icon-btn" id="btnMute" data-icon="volume" title="Mute"></button>
+        <input type="range" class="lol-range" id="volume" min="0" max="100" value="50" />
+      </div>
+    </footer>
+
+    <div class="connect" id="connect">
+      <div class="connect-panel lol-frame">
+        <h2>Link Spotify</h2>
+        <p class="connect-sub">One-time setup, about two minutes.</p>
+        <ol class="steps">
+          <li>
+            Open the <a href="#" id="openDashboard">Spotify Developer Dashboard</a> and create an app (any name and
+            description).
+          </li>
+          <li>Add this Redirect URI: <code class="redirect" id="redirectUri2"></code>, and tick <b>Web API</b>.</li>
+          <li>Copy the app's <b>Client ID</b>, paste it here, and Connect.</li>
+        </ol>
+        <input class="lol-input" id="clientId2" spellcheck="false" placeholder="Client ID" />
+        <button class="lol-btn primary connect-btn" id="btnConnect2">Connect</button>
+        <p class="hint">Controlling playback needs Spotify Premium. Music plays through your Spotify app or phone.</p>
+      </div>
+    </div>
+
+    <div class="toasts" id="toasts"></div>
+
+    <script src="icons.js"></script>
+    <script src="common.js"></script>
+    <script src="client.js"></script>
+  </body>
+</html>

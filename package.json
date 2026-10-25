@@ -1,0 +1,21 @@
+{
+  "name": "spotify-of-legends",
+  "productName": "Spotify of Legends",
+  "version": "1.0.0",
+  "description": "A League of Legends–styled Spotify client with an optional in-game overlay",
+  "main": "src/main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test \"test/*.test.js\"",
+    "icon": "node scripts/make-icon.js"
+  },
+  "license": "MIT",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^45.0.0"
+  },
+  "dependencies": {
+    "koffi": "^3.3.4"
+  }
+}

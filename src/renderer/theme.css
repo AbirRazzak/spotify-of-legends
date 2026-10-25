@@ -1,0 +1,329 @@
+/* Hextech theme: League of Legends' client palette, type, and controls. */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+
+:root {
+  --gold-1: #f0e6d2;
+  --gold-2: #c8aa6e;
+  --gold-3: #c89b3c;
+  --gold-4: #785a28;
+  --gold-5: #463714;
+  --gold-6: #32281e;
+  --gold-text: #cdbe91;
+  --blue-1: #cdfafa;
+  --blue-2: #0ac8b9;
+  --blue-3: #0397ab;
+  --blue-4: #005a82;
+  --blue-5: #0a323c;
+  --blue-6: #091428;
+  --blue-7: #0a1428;
+  --grey-1: #a09b8c;
+  --grey-15: #5b5a56;
+  --grey-2: #3c3c41;
+  --grey-3: #1e2328;
+  --grey-cool: #1e282d;
+  --hextech-black: #010a13;
+  --red: #e84057;
+  --font-display: 'Beaufort for LOL', 'Cinzel', Georgia, serif;
+  --font-body: 'Spiegel', 'Source Sans 3', 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  font-family: var(--font-body);
+  color: var(--gold-1);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  display: block;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+img {
+  -webkit-user-drag: none;
+}
+
+/* Standard gold-bordered button */
+.lol-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 0 20px;
+  font: 700 13px/1 var(--font-display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+  background: linear-gradient(180deg, #1e2328, #161b20);
+  border: 2px solid transparent;
+  border-image: linear-gradient(180deg, var(--gold-2), var(--gold-4)) 1;
+  transition: color 0.15s, box-shadow 0.15s;
+  white-space: nowrap;
+}
+.lol-btn:hover {
+  color: var(--gold-1);
+  border-image: linear-gradient(180deg, var(--gold-1), var(--gold-2)) 1;
+  box-shadow: inset 0 0 14px rgba(200, 170, 110, 0.22), 0 0 10px rgba(200, 170, 110, 0.18);
+}
+.lol-btn:active {
+  color: var(--gold-4);
+}
+.lol-btn:disabled {
+  color: var(--grey-15);
+  border-image: linear-gradient(var(--grey-2), var(--grey-2)) 1;
+  box-shadow: none;
+  cursor: default;
+}
+.lol-btn.small {
+  min-height: 26px;
+  padding: 0 12px;
+  font-size: 11px;
+}
+/* Hextech-blue "Play"-style call to action */
+.lol-btn.primary {
+  color: var(--blue-1);
+  background: radial-gradient(ellipse at 50% 130%, rgba(10, 200, 185, 0.5), transparent 70%), linear-gradient(180deg, #0a323c, #091428);
+  border-image: linear-gradient(180deg, var(--gold-1), var(--gold-2) 45%, var(--gold-4)) 1;
+}
+.lol-btn.primary:hover {
+  color: #fff;
+  box-shadow: inset 0 0 18px rgba(10, 200, 185, 0.35), 0 0 14px rgba(10, 200, 185, 0.25);
+}
+
+/* Round play/pause orb with double gold ring */
+.orb {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  color: var(--gold-1);
+  background: radial-gradient(circle at 50% 30%, #0a323c, var(--hextech-black) 75%);
+  box-shadow: 0 0 0 2px var(--gold-4), 0 0 0 4px var(--hextech-black), 0 0 0 5px var(--gold-3), inset 0 0 14px rgba(10, 200, 185, 0.25);
+  transition: box-shadow 0.15s, color 0.15s;
+}
+.orb:hover {
+  color: #fff;
+  box-shadow: 0 0 0 2px var(--gold-2), 0 0 0 4px var(--hextech-black), 0 0 0 5px var(--gold-1), inset 0 0 18px rgba(10, 200, 185, 0.5),
+    0 0 16px rgba(200, 170, 110, 0.35);
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  color: var(--gold-text);
+  transition: color 0.15s, filter 0.15s;
+}
+.icon-btn:hover {
+  color: var(--gold-1);
+  filter: drop-shadow(0 0 4px rgba(200, 170, 110, 0.6));
+}
+.icon-btn.on {
+  color: var(--blue-2);
+  filter: drop-shadow(0 0 4px rgba(10, 200, 185, 0.6));
+}
+.icon-btn:disabled {
+  color: var(--grey-15);
+  filter: none;
+  cursor: default;
+}
+
+/* Range slider with gold fill and diamond thumb; JS sets --pct */
+.lol-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  background: transparent;
+  cursor: pointer;
+  --pct: 50%;
+}
+.lol-range::-webkit-slider-runnable-track {
+  height: 4px;
+  background: linear-gradient(90deg, var(--gold-4), var(--gold-2) var(--pct), var(--grey-3) var(--pct));
+  border: 1px solid var(--gold-5);
+}
+.lol-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  margin-top: -4px;
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, var(--gold-1), var(--gold-3));
+  border: 1px solid var(--gold-5);
+  box-shadow: 0 0 6px rgba(200, 170, 110, 0.6);
+}
+.lol-range:hover::-webkit-slider-thumb {
+  background: var(--gold-1);
+}
+
+/* Checkbox with diamond tick */
+.lol-check {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--gold-text);
+  font-size: 14px;
+  cursor: pointer;
+}
+.lol-check input {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  background: var(--hextech-black);
+  border: 1px solid var(--gold-4);
+  cursor: pointer;
+}
+.lol-check input::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  transform: rotate(45deg) scale(0);
+  background: linear-gradient(135deg, var(--gold-1), var(--gold-3));
+  transition: transform 0.12s;
+}
+.lol-check input:checked::after {
+  transform: rotate(45deg) scale(1);
+}
+.lol-check:hover input {
+  border-color: var(--gold-2);
+}
+.lol-check:hover {
+  color: var(--gold-1);
+}
+
+.lol-input {
+  height: 34px;
+  padding: 0 12px;
+  font: 500 14px var(--font-body);
+  color: var(--gold-1);
+  background: rgba(1, 10, 19, 0.85);
+  border: 1px solid var(--gold-5);
+  outline: none;
+  user-select: text;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.lol-input::placeholder {
+  color: var(--grey-15);
+}
+.lol-input:hover {
+  border-color: var(--gold-4);
+}
+.lol-input:focus {
+  border-color: var(--gold-2);
+  box-shadow: 0 0 8px rgba(200, 170, 110, 0.2);
+}
+
+/* Gold rule with a diamond in the middle */
+.lol-divider {
+  position: relative;
+  height: 1px;
+  margin: 18px 0;
+  background: linear-gradient(90deg, transparent, var(--gold-4) 12%, var(--gold-4) 88%, transparent);
+}
+.lol-divider::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: var(--hextech-black);
+  border: 1px solid var(--gold-3);
+}
+
+/* Framed panel: gradient gold border, outer hairline, crown diamond */
+.lol-frame {
+  position: relative;
+  border: 2px solid transparent;
+  border-image: linear-gradient(180deg, var(--gold-2), var(--gold-4)) 1;
+  background: var(--hextech-black);
+}
+.lol-frame::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border: 1px solid var(--gold-5);
+  pointer-events: none;
+}
+.lol-frame::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -14px;
+  width: 10px;
+  height: 10px;
+  transform: translateX(-50%) rotate(45deg);
+  background: var(--hextech-black);
+  border: 1px solid var(--gold-2);
+  pointer-events: none;
+}
+
+/* Scrolling text (see setMarqueeText in common.js) */
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee > span {
+  display: inline-block;
+}
+.marquee.scrolling {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 var(--fade-l, 0px),
+    #000 calc(100% - var(--fade-r, 16px)),
+    transparent
+  );
+}
+
+.section-title {
+  margin: 0 0 12px;
+  font: 700 13px var(--font-display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-2);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gold-5);
+  border: 1px solid var(--gold-4);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-4);
+}
